@@ -1,6 +1,7 @@
 #ifndef ARRAY_BASED_PD_H_
 #define ARRAY_BASED_PD_H_
 #include <string>
+using namespace std;
 
 /** Specification file for the array-based phone directory.
  */
@@ -56,9 +57,14 @@ private:
 	class Directory_Entry /* Exercise 1.6: Please complete the definition of the Directory_Entry class here. - Ed/Kent */
 	{
 	public:
-	
+		Directory_Entry();
+		Directory_Entry(string name, string number);
+		string get_name() const;
+		string get_number() const;
+		void set_number(const string &new_number);
 	private:
-
+		string name;
+		string number;
 	};
 
 	// Private Functions

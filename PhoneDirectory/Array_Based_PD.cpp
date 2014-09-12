@@ -170,3 +170,12 @@ void Phone_Directory::reallocate()
 	// Set the_directory to point to the new directory.
 	the_directory = new_directory;
 }
+
+Phone_Directory::Directory_Entry::Directory_Entry()
+{}
+/*
+Phone_Directory::Directory_Entry::Directory_Entry(string name, string number)
+{
+	
+}
+*/
