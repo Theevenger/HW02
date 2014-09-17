@@ -1,7 +1,7 @@
 /** Implementation of the Phone_Directory using an array
 	of entries
 	@author Koffman and Wolfgang
-*/
+	*/
 
 #include "Array_Based_PD.h"
 #include <string>
@@ -115,67 +115,107 @@ void Phone_Directory::save()
 	*/
 string Phone_Directory::remove_entry(const string& name) // Exercise 1.7: please complete the remove_entry() method - Ed/Kent
 {
-
+	//josh
 	// Hint: you can use the code below to shift names down in the directory to remove the selected entry specified by "index"
 	// for (int i = index; i < size - 1; i++)
-		// the_directory[i] = the_directory[i + 1];
+	// the_directory[i] = the_directory[i + 1];
 
-	return "";
-}
+	int index = find(name); // index of the person to be removed in the_directory
 
-// Private method implementation
-
-/** Search the array for a given name.
-	@param name The name to be found
-	@return The index of the entry containing this name
-	or -1 if the name is not present
-	*/
-int Phone_Directory::find(const string& name) const
-{
-	for (int i = 0; i < size; i++) {
-		if (the_directory[i].get_name() == name)
-			return i;
+	if (index == size) // name wasn't found; return empty string
+	{
+		return "";
 	}
-	return -1;
-}
-/** Add a new name-number pair to the directory.
-	@param name The name to be added
-	@param number The number to be added
-	*/
-void Phone_Directory::add(const string& name,
-	const string& number)
-{
-	if (size == capacity) // If no room, reallocate.
-		reallocate();
-	// Increment size and add new entry.
-	the_directory[size] = Directory_Entry(name, number);
-	size++;
-}
+	else
+	{
+		string number_of_deleted = the_directory[index].get_number();
 
-/** Create a new array of directory entries with twice the capacity
-	of the current one.
-	*/
-void Phone_Directory::reallocate()
-{
-	// Double the capacity.
-	capacity *= 2;
-	// Create a new directory array.
-	Directory_Entry* new_directory = new Directory_Entry[capacity];
-	// Copy the old to the new
-	for (int i = 0; i < size; i++) {
-		new_directory[i] = the_directory[i];
+		for (int i = index; i < size - 1; i++) // move entries up from after the deleted entry
+		{
+			the_directory[i] = the_directory[i + 1];
+		}
+		size--;
+		return number_of_deleted;
+
 	}
-	// Return the memory occupied by the old directory.
-	delete[] the_directory;
-	// Set the_directory to point to the new directory.
-	the_directory = new_directory;
 }
 
-Phone_Directory::Directory_Entry::Directory_Entry()
-{}
-/*
-Phone_Directory::Directory_Entry::Directory_Entry(string name, string number)
-{
-	
-}
-*/
+
+
+
+	// Private method implementation
+
+	/** Search the array for a given name.
+		@param name The name to be found
+		@return The index of the entry containing this name
+		or -1 if the name is not present
+		*/
+	int Phone_Directory::find(const string& name) const
+	{
+		for (int i = 0; i < size; i++) {
+			if (the_directory[i].get_name() == name)
+				return i;
+		}
+		return -1;
+	}
+	/** Add a new name-number pair to the directory.
+		@param name The name to be added
+		@param number The number to be added
+		*/
+	void Phone_Directory::add(const string& name,
+		const string& number)
+	{
+		if (size == capacity) // If no room, reallocate.
+			reallocate();
+		// Increment size and add new entry.
+		the_directory[size] = Directory_Entry(name, number);
+		size++;
+	}
+
+	/** Create a new array of directory entries with twice the capacity
+		of the current one.
+		*/
+	void Phone_Directory::reallocate()
+	{
+		// Double the capacity.
+		capacity *= 2;
+		// Create a new directory array.
+		Directory_Entry* new_directory = new Directory_Entry[capacity];
+		// Copy the old to the new
+		for (int i = 0; i < size; i++) {
+			new_directory[i] = the_directory[i];
+		}
+		// Return the memory occupied by the old directory.
+		delete[] the_directory;
+		// Set the_directory to point to the new directory.
+		the_directory = new_directory;
+	}
+
+	// directory_entry functions below completed by josh
+	Phone_Directory::Directory_Entry::Directory_Entry() // default constructor
+	{
+		this->name = "";
+		this->number = "";
+	}
+
+	Phone_Directory::Directory_Entry::Directory_Entry(string name, string number)
+	{
+		this->name = name;
+		this->number = number;
+	}
+
+	string Phone_Directory::Directory_Entry::get_name() const
+	{
+		return this->name;
+	}
+
+	string Phone_Directory::Directory_Entry::get_number() const
+	{
+		return this->number;
+	}
+
+	void Phone_Directory::Directory_Entry::set_number(const string &new_number)
+	{
+		this->number = new_number;
+	}
+
